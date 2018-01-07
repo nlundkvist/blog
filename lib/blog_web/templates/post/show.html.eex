@@ -1,0 +1,86 @@
+<header class="intro-header" style="background-image: url('/images/post-bg.jpg')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1> <%= @post.title %>  </h1>
+          <h2 class="subheading"><%= String.slice(@post.content, 0..65) <> "..." %></h2>
+          <span class="meta">Posted by <%= link @post.author.name, to: author_path(@conn, :show, @post.author) %> on <%= @post.inserted_at |> format_date() %> </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Post Content -->
+  <article>
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <%= @post.content |> text_to_html %>
+      </div>
+    </div>
+  </article>
+
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <%= unless Enum.empty?(@post.comments) do %>
+        <h2 class="section-heading">Comments</h2>
+        <hr>
+
+        <ul class="media-list">
+
+          <%= for comment <- @post.comments do %>
+
+            <li class="media" id="<%= comment.id %>">
+              <span class="pull-left">
+                <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
+              </span>
+              <div class="media-body">
+                <div class="well well-lg">
+                  <h4 class="media-heading text-uppercase reviews" style="display: inline;"><%= comment.name %> </h4>
+                  <span class="text-muted pull-right"><%= comment.inserted_at |> format_date %></span>
+                  <p class="media-comment"> <%= comment.content |> text_to_html %> </p>
+                </div>
+              </div>
+            </li>
+
+          <% end %>
+
+        </ul>
+
+      <% end %>
+      <h2 class="section-heading">Share your opinion</h2>
+
+      <%= form_for @conn, comment_path(@conn, :create), [as: :comment], fn f -> %>
+        <%= hidden_input f, :post_id, value: @post.id, class: "form-control" %>
+
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <%= label f, :name %>
+            <%= text_input f, :name, class: "form-control", placeholder: "Name", required: "true" %>
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+
+        <div class="row control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <%= label f, :content %>
+            <%= textarea f, :content, class: "form-control", placeholder: "Message", required: "true", rows: "3" %>
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+
+        <br>
+        <div id="success"></div>
+
+        <div class="row">
+          <div class="form-group col-xs-12">
+            <%= submit "Comment", class: "btn btn-default" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

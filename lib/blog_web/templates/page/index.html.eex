@@ -1,0 +1,52 @@
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style="background-image: url('/images/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>Developer Blog</h1>
+                    <hr class="small">
+                    <span class="subheading">A Personal Developer Blog by Niklas</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+            <%= for post <- @posts do %>
+                <div class="post-preview">
+                    <a href="/post/<%= post.slug %>">
+                        <h2 class="post-title">
+                            <%= post.title %>
+                        </h2>
+                        <h3 class="post-subtitle">
+                            <%= String.slice(post.content, 0..65) <> "..." %>
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posted by <a href="/author/<%= post.author.id %>"><%= post.author.name %></a> on <%= post.inserted_at |> format_date() %></p>
+                </div>
+                <hr>
+            <% end %>
+
+            <!-- Pager -->
+            <ul class="pager">
+              <li class="previous">
+                <%= if @page > 1 do %>
+                  <%= link "← Newer Posts", to: page_path(@conn, :index, "page": @page-1) %>
+                <% end %>
+              </li>
+              <li class="next">
+                <%= if const_page_size() * @page < @count do %>
+                  <%= link "Older Posts →", to: page_path(@conn, :index, "page": @page+1) %>
+                <% end %>
+              </li>
+            </ul>
+        </div>
+    </div>
+</div>

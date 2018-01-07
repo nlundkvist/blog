@@ -1,0 +1,46 @@
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style="background-image: url(' <%= get_image_url() %> ')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="page-heading">
+                    <h1>About Me</h1>
+                    <hr class="small">
+                    <span class="subheading">Who am I and what am I doing?</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <h2 class="section-heading">Weather Information in Swedish</h2>
+            <p id="smhi"></p>
+            <h2 class="section-heading">Tweets about Sweden</h2>
+            <p><a class="twitter-timeline" href="https://twitter.com/hashtag/Sweden" data-widget-id="947452612898709509">#Sweden Tweets</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></p>
+            <h2 class="section-heading">Random Text in Latin</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius praesentium recusandae illo eaque architecto error, repellendus iusto reprehenderit, doloribus, minus sunt. Numquam at quae voluptatum in officia voluptas voluptatibus, minus!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum molestiae debitis nobis, quod sapiente qui voluptatum, placeat magni repudiandae accusantium fugit quas labore non rerum possimus, corrupti enim modi! Et.</p>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+  var xmlhttp = new XMLHttpRequest();
+  var url = "//opendata-download-warnings.smhi.se/api/version/2/messages.json";
+
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var message = JSON.parse(this.responseText).message.text;
+        document.getElementById('smhi').innerText = message;
+    }
+  };
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+</script>
