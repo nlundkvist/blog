@@ -17,6 +17,7 @@ defmodule BlogWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/github", GithubController, :show
     get "/post/:slug", PostController, :show
     post "/comment", CommentController, :create
     resources "/author", AuthorController

@@ -1,0 +1,35 @@
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style="background-image: url('/images/github-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="page-heading">
+                    <h1>My repository</h1>
+                    <hr class="small">
+                    <span class="subheading">Watch the work on this blog unfold</span>
+                </div>
+            </div>  
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <%= for commit <- @commits do %>
+                <div class="post-preview">
+                    <a href="<%= commit["html_url"] %>">
+                        <h2 class="post-title">
+                            <%= commit["sha"] %>
+                        </h2>
+                        <h3 class="post-subtitle">
+                            <%= commit["commit"]["message"] %>
+                        </h3>
+                    </a>
+                    <p class="post-meta">
+                        Committed by <%= link commit["author"]["login"], to: commit["author"]["html_url"] %> on <%= commit["commit"]["author"]["date"] |> NaiveDateTime.from_iso8601! |> format_date() %>
+                    </p>
+                </div>
+            <% end %>
+        </div>
+    </div>
