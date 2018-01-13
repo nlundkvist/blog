@@ -20,5 +20,7 @@ defmodule BlogWeb.Util.DateFormatter do
       12 -> "December"
     end
   end
+
+  def format_month(month), do: "Unknown"
   
 end
